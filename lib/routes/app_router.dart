@@ -366,12 +366,30 @@ class AppRouterBuilder with _AppRouteAdder {
     );
   }
 
-  GoRouter build({AppRoute? home}) {
+  /// Discovery stays outside the habit tabs to keep the opening flow simple.
+  void addVenueDiscovery({required GoRouterWidgetBuilder builder}) {
+    _routes.add(
+      GoRoute(
+        path: '/explore',
+        name: 'explore',
+        pageBuilder: _appPageBuilder(builder),
+      ),
+    );
+  }
+
+  GoRouter build({
+    AppRoute? home,
+    String? initialLocation,
+    ShellRouteBuilder? rootBuilder,
+  }) {
     return GoRouter(
-      initialLocation: home != null ? _pathFor(home) : null,
+      initialLocation:
+          initialLocation ?? (home != null ? _pathFor(home) : null),
       navigatorKey: navigatorKey,
       observers: [currentRouteObserver],
-      routes: _routes,
+      routes: rootBuilder == null
+          ? _routes
+          : [ShellRoute(builder: rootBuilder, routes: _routes)],
     );
   }
 }

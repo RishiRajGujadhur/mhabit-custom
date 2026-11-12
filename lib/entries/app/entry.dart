@@ -27,6 +27,7 @@ import '../../common/app_info.dart';
 import '../../common/flavor.dart';
 import '../../common/utils.dart';
 import '../../extensions/context_extensions.dart';
+import '../../features/venue_discovery/page.dart';
 import '../../l10n/localizations.dart';
 import '../../logging/helper.dart';
 import '../../models/app_apple_sidebar_style_mode.dart';
@@ -242,24 +243,38 @@ class _AppEntryState extends State<_AppEntry> {
       appChromeNavigatorKey: appChromeNavigatorKey,
       initialIndex: initialBranch.navigationIndex,
     );
-    return (AppRouterBuilder()..addShellRoute(
-          appFlow: appFlow,
-          branchObservers: branchObservers,
-          branches: branches,
-          navigatorKey: appChromeNavigatorKey,
-          observers: [appFlowObserver],
-          builder: (context, state, child) {
-            final appleSidebarStyleMode = context
-                .select<AppDeveloperViewModel, AppAppleSidebarStyleMode>(
-                  (viewModel) => viewModel.appleSidebarStyleMode,
-                );
-            final appleCollapsedSidebarEnabled = context
-                .select<AppAppleCollapsedSidebarViewModel, bool>(
-                  (viewModel) => viewModel.enabled,
-                );
-            return ChangelogBanner(
-              child: AppPostInit(
-                child: AppNavigationShell(
+    return (AppRouterBuilder()
+          ..addVenueDiscovery(
+            builder: (context, _) => VenueDiscoveryPage(
+              onOpenHabits: () =>
+                  context.pushNamed(initialBranch.rootRoute.name),
+            ),
+          )
+          ..addShellRoute(
+            appFlow: appFlow,
+            branchObservers: branchObservers,
+            branches: branches,
+            navigatorKey: appChromeNavigatorKey,
+            observers: [appFlowObserver],
+            builder: (context, state, child) {
+              final appleSidebarStyleMode = context
+                  .select<AppDeveloperViewModel, AppAppleSidebarStyleMode>(
+                    (viewModel) => viewModel.appleSidebarStyleMode,
+                  );
+              final appleCollapsedSidebarEnabled = context
+                  .select<AppAppleCollapsedSidebarViewModel, bool>(
+                    (viewModel) => viewModel.enabled,
+                  );
+              return Scaffold(
+                appBar: AppBar(
+                  leading: IconButton(
+                    tooltip: 'Back to places',
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () => context.goNamed('explore'),
+                  ),
+                  title: const Text('Health routines'),
+                ),
+                body: AppNavigationShell(
                   coordinator: _navigationCoordinator,
                   chromeController: _navigationChromeController,
                   auxiliaryChromeBuilder: _buildAuxiliaryChrome,
@@ -267,15 +282,18 @@ class _AppEntryState extends State<_AppEntry> {
                   appleCollapsedSidebarEnabled: appleCollapsedSidebarEnabled,
                   child: child,
                 ),
-              ),
-            );
-          },
-          branchBuilder: (context, state, navigationShell) {
-            _navigationCoordinator.attachTabShell(navigationShell);
-            return navigationShell;
-          },
-        ))
-        .build(home: initialBranch.rootRoute);
+              );
+            },
+            branchBuilder: (context, state, navigationShell) {
+              _navigationCoordinator.attachTabShell(navigationShell);
+              return navigationShell;
+            },
+          ))
+        .build(
+          initialLocation: '/explore',
+          rootBuilder: (_, _, child) =>
+              ChangelogBanner(child: AppPostInit(child: child)),
+        );
   }
 
   List<AppNavigationAuxiliaryChrome> _buildAuxiliaryChrome(

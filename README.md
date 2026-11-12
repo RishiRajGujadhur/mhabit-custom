@@ -34,6 +34,10 @@
 
 ---
 
+## Personal fork
+
+This repository is a personal fork of Table Habit for experimenting with custom features.
+
 **Table Habit** is a **free and open-source** habit tracker that helps you build
 micro habits with a unique scoring system, rich growth charts, and
 **cross-device WebDAV sync**. Available on Android, iOS, macOS, Windows, and

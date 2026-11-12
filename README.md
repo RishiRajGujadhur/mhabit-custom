@@ -50,6 +50,13 @@ Mauritius recommendations. Directions are disabled for samples. Real venue data,
 location-based search and a map are not connected yet. See
 [implementation notes](docs/venue-discovery.md).
 
+#### Screen preview
+
+![Access Mauritius venue discovery and access details preview](docs/previews/access-mauritius-preview.png)
+
+*Static reconstruction of the implemented Flutter screens, not a running iOS screenshot. Fictional sample venues; native typography, icons and spacing may differ.*
+
+
 **Table Habit** is a **free and open-source** habit tracker that helps you build
 micro habits with a unique scoring system, rich growth charts, and
 **cross-device WebDAV sync**. Available on Android, iOS, macOS, Windows, and

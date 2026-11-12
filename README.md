@@ -36,7 +36,26 @@
 
 ## Personal fork
 
-This repository is a personal fork of Table Habit for experimenting with custom features.
+This repository adapts Table Habit into a personal health and independence app.
+
+### Access Mauritius preview
+
+The app opens with a simple **Where can I go?** venue list. Search by place or
+area, optionally filter for step-free entry or an accessible toilet, then tap a
+place for access details and directions. The original Table Habit routines remain
+available from the health routines button.
+
+**Current status:** all bundled venues are fictional examples, not verified
+Mauritius recommendations. Directions are disabled for samples. Real venue data,
+location-based search and a map are not connected yet. See
+[implementation notes](docs/venue-discovery.md).
+
+#### Screen preview
+
+![Access Mauritius venue discovery and access details preview](docs/previews/access-mauritius-preview.png)
+
+*Static reconstruction of the implemented Flutter screens, not a running iOS screenshot. Fictional sample venues; native typography, icons and spacing may differ.*
+
 
 **Table Habit** is a **free and open-source** habit tracker that helps you build
 micro habits with a unique scoring system, rich growth charts, and
